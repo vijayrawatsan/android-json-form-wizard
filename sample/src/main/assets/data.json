@@ -1,0 +1,87 @@
+{
+    "count":"3",
+    "step1":{
+        "fields":[
+            {
+                "key":"name",
+                "type":"edit_text",
+                "hint":"Enter Your Name"
+            },
+            {
+                "key":"email",
+                "type":"edit_text",
+                "hint":"Enter Your Email"
+            },
+            {
+                "key":"labelBackgroundImage",
+                "type":"label",
+                "text":"Choose Background Image"
+            },
+            {
+                "key":"chooseImage",
+                "type":"choose_image",
+                "uploadButtonText":"Choose"
+            }
+        ],
+        "title":"Step 1 of 3",
+        "next":"step2"
+    },
+    "step2":{
+        "fields":[
+            {
+                "key":"name",
+                "type":"edit_text",
+                "hint":"Enter Country"
+            },
+            {
+                "key":"checkData",
+                "type":"check_box",
+                "label":"Select multiple preferences",
+                "options":[
+                    {
+                        "key":"awesomeness",
+                        "text":"Are you willing for some awesomeness?",
+                        "value":"false"
+                    },
+                    {
+                        "key":"newsletter",
+                        "text":"Do you really want to opt out from my newsletter?",
+                        "value":"false"
+                    }
+                ]
+            },
+            {
+                "key":"radioData",
+                "type":"radio",
+                "label":"Select one item from below",
+                "options":[
+                    {
+                        "key":"areYouPro",
+                        "text":"Are you pro?"
+                    },
+                    {
+                        "key":"areYouAmature",
+                        "text":"Are you amature?"
+                    },
+                    {
+                        "key":"areYouNovice",
+                        "text":"Are you novice?"
+                    }
+                ],
+                "value":"areYouNovice"
+            }
+        ],
+        "title":"Step 2 of 3",
+        "next":"step3"
+    },
+    "step3":{
+        "fields":[
+            {
+                "key":"anything",
+                "type":"edit_text",
+                "hint":"Enter Anything You Want"
+            }
+        ],
+        "title":"Step 3 of 3"
+    }
+}

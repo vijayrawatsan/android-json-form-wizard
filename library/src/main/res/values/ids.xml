@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="key"/>
+    <item type="id" name="type"/>
+    <item type="id" name="childKey"/>
+    <item type="id" name="imagePath"/>
+</resources>

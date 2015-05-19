@@ -1,0 +1,14 @@
+<com.rengwuxian.materialedittext.MaterialEditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/default_text_size"
+    app:met_typeface="font/Roboto-Regular.ttf"
+    app:met_floatingLabel="highlight"
+    app:met_floatingLabelText=""
+    app:met_maxCharacters="50"
+    app:met_minCharacters="0"
+    app:met_primaryColor="?colorAccent"
+    app:met_singleLineEllipsis="true"
+    />

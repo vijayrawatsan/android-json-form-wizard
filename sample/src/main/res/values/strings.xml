@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Android Json Wizard Demo</string>
+    <string name="click_to_launch">Click to launch JsonActivity</string>
+</resources>

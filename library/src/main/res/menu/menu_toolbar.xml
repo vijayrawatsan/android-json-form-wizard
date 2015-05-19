@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_next"
+        android:title="Next"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/action_save"
+        android:title="Save"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        />
+</menu>
