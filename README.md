@@ -4,6 +4,7 @@ Android Json Wizard
 Android Json Wizard is a library for creating beautiful form based wizards within your app just by defining json in a particular format.
 
 # Demo
+[![alt demo](http://img.youtube.com/vi/0PQD8EA8lEI/hqdefault.jpg)](https://www.youtube.com/watch?v=0PQD8EA8lEI)
 
 [Demo Youtube Link](http://youtu.be/0PQD8EA8lEI)
 
