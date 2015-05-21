@@ -1,3 +1,6 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Json%20Wizard-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1848)
+
+
 Android Json Wizard
 =========
 
