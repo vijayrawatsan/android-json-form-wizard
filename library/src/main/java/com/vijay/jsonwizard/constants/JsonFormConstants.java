@@ -12,4 +12,5 @@ public class JsonFormConstants {
     public static final String LABEL              = "label";
     public static final String CHOOSE_IMAGE       = "choose_image";
     public static final String OPTIONS_FIELD_NAME = "options";
+    public static final String SPINNER            = "spinner";
 }
