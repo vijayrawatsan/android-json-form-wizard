@@ -123,29 +123,6 @@ value - will be the path of chosen image on external storage
         ]
     }
 
-<<<<<<< HEAD
-=======
-#### Spinner
-    ```json
-        {
-            "key":"name",
-            "type":"spinner",
-            "hint":"Name Thy House"
-            "values":["Stark", "Targeriyan", "Lannister"]
-        }
-    ```
-
-    key - must be unique in that particular step.
-
-    type - must be spinner
-
-    hint - hint for Spinner.
-
-    values - Array of Strings.
-    
-    value - will be the value present in the spinner after completion of wizard
-
->>>>>>> 106ea0d88b95fe4fc7ecfae20ce3cd61ea67b956
 ```
 
 key - must be unique in that particular step.
@@ -161,8 +138,6 @@ key(in options) - must be unique in options.
 text(in options) - text fot the CheckBox.
 
 value(in options) - true/false.
-
-
 
 #### Spinner
 ```json
