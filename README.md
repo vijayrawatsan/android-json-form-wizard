@@ -122,6 +122,27 @@ value - will be the path of chosen image on external storage
             }
         ]
     }
+
+#### Spinner
+    ```json
+        {
+            "key":"name",
+            "type":"spinner",
+            "hint":"Name Thy House"
+            "values":["Stark", "Targeriyan", "Lannister"]
+        }
+    ```
+
+    key - must be unique in that particular step.
+
+    type - must be spinner
+
+    hint - hint for Spinner.
+
+    values - Array of Strings.
+    
+    value - will be the value present in the spinner after completion of wizard
+
 ```
 key - must be unique in that particular step.
 
