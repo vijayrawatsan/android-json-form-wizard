@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,6 +148,14 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 getView().unCheckAllExcept(parentKey, childKey);
                 getView().writeValue(mStepName, parentKey, childKey);
             }
+        }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String parentKey = (String) parent.getTag(R.id.key);
+        if (position > 0) {
+            String value = (String) parent.getItemAtPosition(position + 1);
+            getView().writeValue(mStepName, parentKey, value);
         }
     }
 }

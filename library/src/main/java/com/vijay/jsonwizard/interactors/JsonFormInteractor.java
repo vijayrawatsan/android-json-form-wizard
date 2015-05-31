@@ -21,6 +21,7 @@ import com.vijay.jsonwizard.widgets.EditTextFactory;
 import com.vijay.jsonwizard.widgets.ImagePickerFactory;
 import com.vijay.jsonwizard.widgets.LabelFactory;
 import com.vijay.jsonwizard.widgets.RadioButtonFactory;
+import com.vijay.jsonwizard.widgets.SpinnerFactory;
 
 /**
  * Created by vijay on 5/19/15.
@@ -41,6 +42,7 @@ public class JsonFormInteractor {
         map.put(JsonFormConstants.CHECK_BOX, new CheckBoxFactory());
         map.put(JsonFormConstants.RADIO_BUTTON, new RadioButtonFactory());
         map.put(JsonFormConstants.CHOOSE_IMAGE, new ImagePickerFactory());
+        map.put(JsonFormConstants.SPINNER, new SpinnerFactory());
     }
 
     public List<View> fetchFormElements(String stepName, Context context, JSONObject parentJson, CommonListener listener) {

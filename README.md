@@ -122,7 +122,9 @@ value - will be the path of chosen image on external storage
             }
         ]
     }
+
 ```
+
 key - must be unique in that particular step.
 
 type - must be check_box for CheckBox.
@@ -137,6 +139,25 @@ text(in options) - text fot the CheckBox.
 
 value(in options) - true/false.
 
+#### Spinner
+```json
+        {
+            "key":"name",
+            "type":"spinner",
+            "hint":"Name Thy House"
+            "values":["Stark", "Targeriyan", "Lannister"]
+        }
+```
+
+key - must be unique in that particular step.
+
+type - must be spinner
+
+hint - hint for Spinner.
+
+values - Array of Strings.
+
+value - will be the value present in the spinner after completion of wizard
 
 #### RadioButton (can be used for single/multiple RadioButtons)
 
@@ -441,6 +462,7 @@ Contributions welcome via Github pull requests.
 
 - [material](https://github.com/rey5137/material)
 - [MaterialEditText](https://github.com/rengwuxian/MaterialEditText)
+- [MaterialSpinner](https://github.com/ganfra/MaterialSpinner)
 
 Thanks!
 
