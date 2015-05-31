@@ -21,6 +21,12 @@
                 "key":"chooseImage",
                 "type":"choose_image",
                 "uploadButtonText":"Choose"
+            },
+            {
+                "key":"house",
+                "type":"spinner",
+                "hint": "Name Thy House",
+                "values":["Stark", "Targeriyan", "Lannister"]
             }
         ],
         "title":"Step 1 of 3",
