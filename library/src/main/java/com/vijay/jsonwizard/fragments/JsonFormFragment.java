@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
@@ -98,7 +99,7 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
             presenter.onNextClick(mMainView);
             return true;
         } else if (item.getItemId() == R.id.action_save) {
-            presenter.onSaveClick();
+            presenter.onSaveClick(mMainView);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,6 +178,12 @@ public class JsonFormFragment extends MvpFragment<JsonFormFragmentPresenter, Jso
     public Context getContext() {
         return getActivity();
     }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public CommonListener getCommonListener() {

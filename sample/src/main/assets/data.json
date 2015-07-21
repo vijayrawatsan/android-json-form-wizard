@@ -5,12 +5,21 @@
             {
                 "key":"name",
                 "type":"edit_text",
-                "hint":"Enter Your Name"
+                "hint":"Enter Your Name",
+                "v_min_length":{  "value" : "3",
+                                    "err" : "Min length should be at least 3"
+                                },
+                "v_max_length":{  "value" : "10",
+                    "err" : "Max length can be at most 10."
+                }
             },
             {
                 "key":"email",
                 "type":"edit_text",
-                "hint":"Enter Your Email"
+                "hint":"Enter Your Email",
+                "v_email":{  "value" : "true",
+                    "err" : "Not an email."
+                }
             },
             {
                 "key":"labelBackgroundImage",
@@ -20,7 +29,10 @@
             {
                 "key":"chooseImage",
                 "type":"choose_image",
-                "uploadButtonText":"Choose"
+                "uploadButtonText":"Choose",
+                "v_required":{  "value" : "true",
+                    "err" : "Please choose an image to proceed."
+                }
             },
             {
                 "key":"house",

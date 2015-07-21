@@ -4,4 +4,7 @@
     <item type="id" name="type"/>
     <item type="id" name="childKey"/>
     <item type="id" name="imagePath"/>
+
+    <item type="id" name="v_required"/>
+    <item type="id" name="error"/>
 </resources>
