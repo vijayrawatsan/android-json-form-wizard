@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.vijay.jsonwizard.R;
@@ -25,8 +27,11 @@ import com.vijay.jsonwizard.customviews.RadioButton;
 import com.vijay.jsonwizard.fragments.JsonFormFragment;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 import com.vijay.jsonwizard.mvp.MvpBasePresenter;
+import com.vijay.jsonwizard.utils.ValidationStatus;
 import com.vijay.jsonwizard.views.JsonFormFragmentView;
 import com.vijay.jsonwizard.viewstates.JsonFormFragmentViewState;
+import com.vijay.jsonwizard.widgets.EditTextFactory;
+import com.vijay.jsonwizard.widgets.ImagePickerFactory;
 
 /**
  * Created by vijay on 5/14/15.
@@ -52,6 +57,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
         getView().addFormElements(views);
     }
 
+    @SuppressLint("ResourceAsColor")
     public void setUpToolBar() {
         if (!mStepName.equals(JsonFormConstants.FIRST_STEP_NAME)) {
             getView().setUpBackButton();
@@ -71,17 +77,36 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
     }
 
     public void onNextClick(LinearLayout mainView) {
+        ValidationStatus validationStatus = writeValuesAndValidate(mainView);
+        if (validationStatus.isValid()) {
+            JsonFormFragment next = JsonFormFragment.getFormFragment(mStepDetails.optString("next"));
+            getView().hideKeyBoard();
+            getView().transactThis(next);
+        } else {
+            getView().showToast(validationStatus.getErrorMessage());
+        }
+    }
+
+    public ValidationStatus writeValuesAndValidate(LinearLayout mainView) {
         int childCount = mainView.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View childAt = mainView.getChildAt(i);
             String key = (String) childAt.getTag(R.id.key);
             if (childAt instanceof MaterialEditText) {
                 MaterialEditText editText = (MaterialEditText) childAt;
+                ValidationStatus validationStatus = EditTextFactory.validate(editText);
+                if(!validationStatus.isValid()) {
+                    return validationStatus;
+                }
                 getView().writeValue(mStepName, key, editText.getText().toString());
             } else if (childAt instanceof ImageView) {
-                Object imagePath = childAt.getTag(R.id.imagePath);
-                if (imagePath instanceof String) {
-                    getView().writeValue(mStepName, key, (String) imagePath);
+                ValidationStatus validationStatus = ImagePickerFactory.validate((ImageView) childAt);
+                if(!validationStatus.isValid()) {
+                   return validationStatus;
+                }
+                Object path = childAt.getTag(R.id.imagePath);
+                if (path instanceof String) {
+                    getView().writeValue(mStepName, key, (String) path);
                 }
             } else if (childAt instanceof CheckBox) {
                 String parentKey = (String) childAt.getTag(R.id.key);
@@ -96,15 +121,18 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 }
             }
         }
-        JsonFormFragment next = JsonFormFragment.getFormFragment(mStepDetails.optString("next"));
-        getView().hideKeyBoard();
-        getView().transactThis(next);
+        return new ValidationStatus(true, null);
     }
 
-    public void onSaveClick() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("json", getView().getCurrentJsonState());
-        getView().finishWithResult(returnIntent);
+    public void onSaveClick(LinearLayout mainView) {
+        ValidationStatus validationStatus = writeValuesAndValidate(mainView);
+        if(validationStatus.isValid()) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("json", getView().getCurrentJsonState());
+            getView().finishWithResult(returnIntent);
+        } else {
+            Toast.makeText(getView().getContext(), validationStatus.getErrorMessage(), Toast.LENGTH_LONG);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

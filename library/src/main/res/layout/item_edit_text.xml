@@ -7,8 +7,6 @@
     app:met_typeface="font/Roboto-Regular.ttf"
     app:met_floatingLabel="highlight"
     app:met_floatingLabelText=""
-    app:met_maxCharacters="50"
-    app:met_minCharacters="0"
     app:met_primaryColor="?colorAccent"
     app:met_singleLineEllipsis="true"
     />

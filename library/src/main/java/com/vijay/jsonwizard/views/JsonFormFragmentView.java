@@ -27,6 +27,8 @@ public interface JsonFormFragmentView<VS extends ViewState> extends MvpView {
 
     Context getContext();
 
+    void showToast(String message);
+
     CommonListener getCommonListener();
 
     void addFormElements(List<View> views);
