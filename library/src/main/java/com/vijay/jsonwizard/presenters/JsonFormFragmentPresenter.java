@@ -1,15 +1,9 @@
 package com.vijay.jsonwizard.presenters;
 
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
@@ -27,22 +21,30 @@ import com.vijay.jsonwizard.customviews.RadioButton;
 import com.vijay.jsonwizard.fragments.JsonFormFragment;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 import com.vijay.jsonwizard.mvp.MvpBasePresenter;
+import com.vijay.jsonwizard.utils.ImageUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
 import com.vijay.jsonwizard.views.JsonFormFragmentView;
 import com.vijay.jsonwizard.viewstates.JsonFormFragmentViewState;
 import com.vijay.jsonwizard.widgets.EditTextFactory;
 import com.vijay.jsonwizard.widgets.ImagePickerFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
+import static com.vijay.jsonwizard.utils.FormUtils.dpToPixels;
+
 /**
  * Created by vijay on 5/14/15.
  */
 public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragmentView<JsonFormFragmentViewState>> {
-    private static final String TAG                 = "FormFragmentPresenter";
-    private static final int    RESULT_LOAD_IMG     = 1;
-    private String              mStepName;
-    private JSONObject          mStepDetails;
-    private String              mCurrentKey;
-    private JsonFormInteractor  mJsonFormInteractor = JsonFormInteractor.getInstance();
+    private static final String TAG = "FormFragmentPresenter";
+    private static final int RESULT_LOAD_IMG = 1;
+    private String mStepName;
+    private JSONObject mStepDetails;
+    private String mCurrentKey;
+    private JsonFormInteractor mJsonFormInteractor = JsonFormInteractor.getInstance();
 
     public void addFormElements() {
         mStepName = getView().getArguments().getString("stepName");
@@ -95,14 +97,14 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
             if (childAt instanceof MaterialEditText) {
                 MaterialEditText editText = (MaterialEditText) childAt;
                 ValidationStatus validationStatus = EditTextFactory.validate(editText);
-                if(!validationStatus.isValid()) {
+                if (!validationStatus.isValid()) {
                     return validationStatus;
                 }
                 getView().writeValue(mStepName, key, editText.getText().toString());
             } else if (childAt instanceof ImageView) {
                 ValidationStatus validationStatus = ImagePickerFactory.validate((ImageView) childAt);
-                if(!validationStatus.isValid()) {
-                   return validationStatus;
+                if (!validationStatus.isValid()) {
+                    return validationStatus;
                 }
                 Object path = childAt.getTag(R.id.imagePath);
                 if (path instanceof String) {
@@ -126,7 +128,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
 
     public void onSaveClick(LinearLayout mainView) {
         ValidationStatus validationStatus = writeValuesAndValidate(mainView);
-        if(validationStatus.isValid()) {
+        if (validationStatus.isValid()) {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("json", getView().getCurrentJsonState());
             getView().finishWithResult(returnIntent);
@@ -138,7 +140,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_LOAD_IMG && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
             // No need for null check on cursor
             Cursor cursor = getView().getContext().getContentResolver()
                     .query(selectedImage, filePathColumn, null, null, null);
@@ -146,7 +148,7 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String imagePath = cursor.getString(columnIndex);
-            getView().updateRelevantImageView(BitmapFactory.decodeFile(imagePath), imagePath, mCurrentKey);
+            getView().updateRelevantImageView(ImageUtils.loadBitmapFromFile(imagePath, ImageUtils.getDeviceWidth(getView().getContext()), dpToPixels(getView().getContext(), 200)), imagePath, mCurrentKey);
             cursor.close();
         }
     }

@@ -1,7 +1,6 @@
 package com.vijay.jsonwizard.widgets;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -10,20 +9,24 @@ import android.widget.ImageView;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.utils.ImageUtils;
 import com.vijay.jsonwizard.utils.ValidationStatus;
-import com.vijay.jsonwizard.validators.edittext.RequiredValidator;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vijay.jsonwizard.utils.FormUtils.*;
+import static com.vijay.jsonwizard.utils.FormUtils.MATCH_PARENT;
+import static com.vijay.jsonwizard.utils.FormUtils.WRAP_CONTENT;
+import static com.vijay.jsonwizard.utils.FormUtils.dpToPixels;
+import static com.vijay.jsonwizard.utils.FormUtils.getLayoutParams;
 
 /**
  * Created by vijay on 24-05-2015.
  */
 public class ImagePickerFactory implements FormWidgetFactory {
+
     @Override
     public List<View> getViewsFromJson(String stepName, Context context, JSONObject jsonObject, CommonListener listener) throws Exception {
         List<View> views = new ArrayList<>(1);
@@ -33,7 +36,7 @@ public class ImagePickerFactory implements FormWidgetFactory {
         imageView.setTag(R.id.type, jsonObject.getString("type"));
 
         JSONObject requiredObject = jsonObject.optJSONObject("v_required");
-        if(requiredObject != null) {
+        if (requiredObject != null) {
             String requiredValue = requiredObject.getString("value");
             if (!TextUtils.isEmpty(requiredValue)) {
                 imageView.setTag(R.id.v_required, requiredValue);
@@ -47,7 +50,7 @@ public class ImagePickerFactory implements FormWidgetFactory {
         String imagePath = jsonObject.optString("value");
         if (!TextUtils.isEmpty(imagePath)) {
             imageView.setTag(R.id.imagePath, imagePath);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+            imageView.setImageBitmap(ImageUtils.loadBitmapFromFile(imagePath, ImageUtils.getDeviceWidth(context), dpToPixels(context, 200)));
         }
         views.add(imageView);
         Button uploadButton = new Button(context);
@@ -62,15 +65,15 @@ public class ImagePickerFactory implements FormWidgetFactory {
     }
 
     public static ValidationStatus validate(ImageView imageView) {
-        if(!(imageView.getTag(R.id.v_required) instanceof String) || !(imageView.getTag(R.id.error) instanceof String)) {
+        if (!(imageView.getTag(R.id.v_required) instanceof String) || !(imageView.getTag(R.id.error) instanceof String)) {
             return new ValidationStatus(true, null);
         }
         Boolean isRequired = Boolean.valueOf((String) imageView.getTag(R.id.v_required));
-        if(!isRequired) {
+        if (!isRequired) {
             return new ValidationStatus(true, null);
         }
         Object path = imageView.getTag(R.id.imagePath);
-        if(path instanceof String && !TextUtils.isEmpty((String) path)) {
+        if (path instanceof String && !TextUtils.isEmpty((String) path)) {
             return new ValidationStatus(true, null);
         }
         return new ValidationStatus(false, (String) imageView.getTag(R.id.error));
