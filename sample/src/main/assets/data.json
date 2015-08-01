@@ -38,7 +38,10 @@
                 "key":"house",
                 "type":"spinner",
                 "hint": "Name Thy House",
-                "values":["Stark", "Targeriyan", "Lannister"]
+                "values":["Stark", "Targeriyan", "Lannister"],
+                "v_required":{  "value" : "true",
+                    "err" : "Please choose a value to proceed."
+                }
             }
         ],
         "title":"Step 1 of 3",

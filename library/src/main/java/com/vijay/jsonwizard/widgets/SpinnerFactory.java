@@ -10,6 +10,7 @@ import com.rey.material.util.ViewUtil;
 import com.vijay.jsonwizard.R;
 import com.vijay.jsonwizard.interfaces.CommonListener;
 import com.vijay.jsonwizard.interfaces.FormWidgetFactory;
+import com.vijay.jsonwizard.utils.ValidationStatus;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,6 +41,15 @@ public class SpinnerFactory implements FormWidgetFactory {
         spinner.setTag(R.id.key, jsonObject.getString("key"));
         spinner.setTag(R.id.type, jsonObject.getString("type"));
 
+        JSONObject requiredObject = jsonObject.optJSONObject("v_required");
+        if (requiredObject != null) {
+            String requiredValue = requiredObject.getString("value");
+            if (!TextUtils.isEmpty(requiredValue)) {
+                spinner.setTag(R.id.v_required, requiredValue);
+                spinner.setTag(R.id.error, requiredObject.optString("err"));
+            }
+        }
+
         String valueToSelect = "";
         int indexToSelect = -1;
         if (!TextUtils.isEmpty(jsonObject.optString("value"))) {
@@ -65,5 +75,20 @@ public class SpinnerFactory implements FormWidgetFactory {
         }
         views.add(spinner);
         return views;
+    }
+
+    public static ValidationStatus validate(MaterialSpinner spinner) {
+        if (!(spinner.getTag(R.id.v_required) instanceof String) || !(spinner.getTag(R.id.error) instanceof String)) {
+            return new ValidationStatus(true, null);
+        }
+        Boolean isRequired = Boolean.valueOf((String) spinner.getTag(R.id.v_required));
+        if (!isRequired) {
+            return new ValidationStatus(true, null);
+        }
+        int selectedItemPosition = spinner.getSelectedItemPosition();
+        if(selectedItemPosition > 0) {
+            return new ValidationStatus(true, null);
+        }
+        return new ValidationStatus(false, (String) spinner.getTag(R.id.error));
     }
 }

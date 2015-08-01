@@ -27,11 +27,14 @@ import com.vijay.jsonwizard.views.JsonFormFragmentView;
 import com.vijay.jsonwizard.viewstates.JsonFormFragmentViewState;
 import com.vijay.jsonwizard.widgets.EditTextFactory;
 import com.vijay.jsonwizard.widgets.ImagePickerFactory;
+import com.vijay.jsonwizard.widgets.SpinnerFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 import static com.vijay.jsonwizard.utils.FormUtils.dpToPixels;
 
@@ -120,6 +123,15 @@ public class JsonFormFragmentPresenter extends MvpBasePresenter<JsonFormFragment
                 String childKey = (String) childAt.getTag(R.id.childKey);
                 if (((RadioButton) childAt).isChecked()) {
                     getView().writeValue(mStepName, parentKey, childKey);
+                }
+            } else if (childAt instanceof MaterialSpinner) {
+                MaterialSpinner spinner = (MaterialSpinner) childAt;
+                ValidationStatus validationStatus = SpinnerFactory.validate(spinner);
+                if (!validationStatus.isValid()) {
+                    spinner.setError(validationStatus.getErrorMessage());
+                    return validationStatus;
+                } else {
+                    spinner.setError(null);
                 }
             }
         }
