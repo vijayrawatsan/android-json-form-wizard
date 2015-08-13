@@ -71,6 +71,50 @@ hint - hint for EditText.
 
 value - will be the value present in the editText after completion of wizard
 
+##### EditText Required Validation
+
+```json
+"v_required" : {
+                    "value" : "true",
+                    "err" : "Please enter some value this is a required field."
+               }
+```
+
+##### EditText Min length Validation
+
+```json
+"v_min_length" : {
+                    "value" : "3",
+                    "err" : "Min length should be at least 3"
+                }
+```
+
+##### EditText Max Length Validation
+
+```json
+"v_max_length" : {
+                    "value" : "30",
+                    "err" : "Max length is 30"
+                }
+```
+
+##### EditText Email Validation
+
+```json
+"v_email" : {
+                    "value" : "true",
+                    "err" : "Not an email."
+                }
+```
+
+##### EditText Regex Validation
+
+```json
+"v_email" : {
+                    "value" : "your-regex-here",
+                    "err" : "Your message here."
+                }
+```
 
 #### Label
 ```json
@@ -102,6 +146,15 @@ type - must be choose_image for ImagePicker.
 uploadButtonText - text for Button of ImagePicker.
 
 value - will be the path of chosen image on external storage
+
+##### ImagePicker Required Validation
+
+```json
+"v_required" : {
+                    "value" : "true",
+                    "err" : "Please enter some value this is a required field."
+               }
+```
 
 #### CheckBox (can be used for single/multiple CheckBoxes)
 ```json
@@ -139,6 +192,11 @@ text(in options) - text fot the CheckBox.
 
 value(in options) - true/false.
 
+##### CheckBox Required Validation
+
+Not supported yet.
+
+
 #### Spinner
 ```json
         {
@@ -158,6 +216,15 @@ hint - hint for Spinner.
 values - Array of Strings.
 
 value - will be the value present in the spinner after completion of wizard
+
+##### Spinner Required Validation
+
+```json
+"v_required" : {
+                    "value" : "true",
+                    "err" : "Please enter some value this is a required field."
+               }
+```
 
 #### RadioButton (can be used for single/multiple RadioButtons)
 
@@ -197,6 +264,9 @@ key(in options) - must be unique in options.
 
 text(in options) - text fot the RadioButton.
 
+##### RadioButton Required Validation
+
+Not supported yet.
 
 ## Demo Input Json (Complete)
 
@@ -208,12 +278,21 @@ text(in options) - text fot the RadioButton.
             {
                 "key":"name",
                 "type":"edit_text",
-                "hint":"Enter Your Name"
+                "hint":"Enter Your Name",
+                "v_min_length":{  "value" : "3",
+                                    "err" : "Min length should be at least 3"
+                                },
+                "v_max_length":{  "value" : "10",
+                    "err" : "Max length can be at most 10."
+                }
             },
             {
                 "key":"email",
                 "type":"edit_text",
-                "hint":"Enter Your Email"
+                "hint":"Enter Your Email",
+                "v_email":{  "value" : "true",
+                    "err" : "Not an email."
+                }
             },
             {
                 "key":"labelBackgroundImage",
@@ -223,7 +302,19 @@ text(in options) - text fot the RadioButton.
             {
                 "key":"chooseImage",
                 "type":"choose_image",
-                "uploadButtonText":"Choose"
+                "uploadButtonText":"Choose",
+                "v_required":{  "value" : "true",
+                    "err" : "Please choose an image to proceed."
+                }
+            },
+            {
+                "key":"house",
+                "type":"spinner",
+                "hint": "Name Thy House",
+                "values":["Stark", "Targeriyan", "Lannister"],
+                "v_required":{  "value" : "true",
+                    "err" : "Please choose a value to proceed."
+                }
             }
         ],
         "title":"Step 1 of 3",
@@ -452,7 +543,7 @@ Step 2. Add the dependency in the form
 ```
 # TODOs
 
-- Support validation.
+- Support validation for Checkbox and RadioButton.
 - Improve image picker UI.
 
 # Contributing
