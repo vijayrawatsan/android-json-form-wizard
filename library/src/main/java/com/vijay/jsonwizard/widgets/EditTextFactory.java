@@ -1,6 +1,7 @@
 package com.vijay.jsonwizard.widgets;
 
 import android.content.Context;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -114,6 +115,14 @@ public class EditTextFactory implements FormWidgetFactory {
                 if (Boolean.TRUE.toString().equalsIgnoreCase(numericValue)) {
                     editText.addValidator(new RegexpValidator(numericObject.getString("err"), "[0-9]+"));
                 }
+            }
+        }
+
+        // edit type check
+        String editType = jsonObject.optString("edit_type");
+        if (!TextUtils.isEmpty(editType)) {
+            if (editType.equals("number")) {
+                editText.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
         }
 
